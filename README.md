@@ -1,8 +1,14 @@
-# advanced-todo-list
+# To-Do List: uma implementação em React e Meteor
 
 Projeto web Meteor + React para gerenciamento de tarefas. A aplicação permite criar, editar, remover e marcar itens como concluídos em uma lista de tarefas, com sincronização em tempo real e interface moderna.
 
-## Estrutura do diretório
+## Objetivos
+
+O objetivo principal desse projeto é construir uma experiência prática com as ferramentas Meteor e React. O desenvolvimento desse projeto faz parte do processo de treinamento interno da empresa Synergia. 
+
+Com tal implementação, busca-se o desenvolvimento de habilidades, tais como estudo de referências e documentações, resolução de problemas, autodidática, habilidades de estilização de interfaces web, dentre outras.
+
+## Estrutura de diretórios
 
 - `client/`
     - código específico do cliente
