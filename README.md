@@ -26,14 +26,14 @@ Projeto web Meteor + React para gerenciamento de tarefas. A aplicação permite 
 
 ## Funcionalidades
 
-- criação de tarefas
-- edição de tarefas
-- exclusão de tarefas
-- marcação de tarefas como concluídas
-- sincronização em tempo real entre usuários
-- interface React com Meteor
-- possível suporte a autenticação de usuário
-- organização dos componentes em `imports/ui`
+- Criação de tarefas
+- Edição de tarefas
+- Exclusão de tarefas
+- Marcação de tarefas como concluídas
+- Sincronização em tempo real entre usuários
+- Interface React com Meteor
+- Possível suporte a autenticação de usuário
+- Organização dos componentes em `imports/ui`
 
 ## Tutorial de execução em outra máquina
 
