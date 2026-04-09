@@ -1,6 +1,9 @@
 import {CssBaseline, ThemeProvider} from "@mui/material";
 import {Box, Typography, Button, Chip} from "@mui/material";
 import { createTheme } from "@mui/material/styles";
+import {React, useState} from "react";
+import { Meteor } from "meteor/meteor";
+
 
 const theme = createTheme({
   "palette": {
@@ -38,14 +41,40 @@ const theme = createTheme({
   "spacing": 9
 });
 
-export const App = () => (
+export const App = () => {
+  const [userId, setUserId] = useState(null);
+
+  const handleClick = () => {
+     Meteor.call("users.login", "admin", "admin123", (error, result) => {
+      if (error) {
+        alert("Login failed:" + error);
+      } else {
+        alert("Login successful, user ID:" + result.username);
+        setUserId(result.username);
+      }
+    });
+  };
+
+  const handleLogout =  () => {
+    Meteor.call("users.logout", (error, result) => {
+      if (error) {
+        alert("Falha no logout")
+      } else {
+        alert("Logout com sucesso")
+        setUserId(null);
+      }
+    });
+  }
+  
+  return(
   <ThemeProvider theme={theme}>
     <CssBaseline />
     <Box sx={{p: 2, display: "flex", flexDirection: "column", alignItems: "center", gap: 2}}>
-      <Button variant="outlined" color="secondary">
+      <Button variant="outlined" color="secondary" onClick={handleClick}>
         Testando estilos
       </Button>
-      <Typography variant="h2">Princípio do Projeto</Typography>
+      <Chip label="Teste de Chip" color="primary" onClick={handleLogout}/>
+      <Typography variant="h2">{userId}</Typography>
     </Box>
-  </ThemeProvider>
-);
+  </ThemeProvider>);
+};
