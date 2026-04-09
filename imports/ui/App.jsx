@@ -46,7 +46,6 @@ export const App = () => (
         Testando estilos
       </Button>
       <Typography variant="h2">Princípio do Projeto</Typography>
-      <Chip label="Teste" color="error" onClick={() => {}} />
     </Box>
   </ThemeProvider>
 );
