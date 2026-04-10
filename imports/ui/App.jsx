@@ -1,9 +1,9 @@
 import {CssBaseline, ThemeProvider} from "@mui/material";
-import {Box, Typography, Button, Chip, Alert} from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import {React, useState} from "react";
 import {useTracker} from "meteor/react-meteor-data";
 import { Meteor } from "meteor/meteor";
+import {LoginForm}  from "./LoginForm";
 
 // Tema global
 const theme = createTheme({
@@ -43,43 +43,9 @@ const theme = createTheme({
 });
 
 export const App = () => {
-  const user = useTracker(() => Meteor.user()); // Para vigiar mudanças de usuário no banco de dados
-
-  // Use states para as mensagens de erro
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [isError, setIsError] = useState(false);
-
-  const handleClick = () => {
-    setErrorMessage(null);
-    setIsError(false);
-    Meteor.loginWithPassword("admin", "admin123", (error) =>{
-      if (error){
-        setErrorMessage(error.reason);
-        setIsError(true);
-      }
-    });
-  };
-
-  const handleLogout =  () => {
-    Meteor.logout();
-  }
-  
   return(
   <ThemeProvider theme={theme}>
     <CssBaseline />
-    <Box sx={{p: 2, display: "flex", flexDirection: "column", alignItems: "center", gap: 2}}>
-      {/*Se há um erro (controlado pelo use state isError) mostra um componente Alert 
-      com a mensagem do erro (controlada pelo use state errorMessage) */}
-      {isError ? (
-        <Alert severity="error" onClose={() => setErrorMessage(null)} sx={{width: "100%", maxWidth: 400}}>
-          {errorMessage}
-        </Alert>
-      ): <div></div>}
-      <Button variant="outlined" color="secondary" onClick={handleClick}>
-        Testando estilos
-      </Button>
-      <Chip label="Teste de Chip" color="primary" onClick={handleLogout}/>
-      <Typography variant="h2">{user ? user.username : "Não há usuário logado"}</Typography>
-    </Box>
+    <LoginForm />
   </ThemeProvider>);
 };
