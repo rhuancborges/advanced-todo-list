@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route} from "react-router";
 import "./main.css";
 import { PrivateRoute } from "../imports/ui/PrivateRoute";
 import {Counter} from "../imports/ui/Counter";
+import { Profiler } from "react";
 
 /* Esquema de rotas:
 
@@ -22,6 +23,8 @@ import {Counter} from "../imports/ui/Counter";
 - [4] Dashboard com Drawer
   Se clicar em "Visualizar tarefas", vai para [5]
   Se abrir o Drawer e clicar em "Perfil", vai para [9]
+  Se abrir o Drawer e clicar em "Home", vai para [4]
+    OBS: O drawer fica disponível para as telas [4]-[10]
   Se clicar em "Logout", vai para [1]
 
 - [5] Tela de visualizar tarefas
@@ -31,7 +34,8 @@ import {Counter} from "../imports/ui/Counter";
 
 - [6] Tela de cadastrar tarefa
   Faz as ações e volta para [5]
-- [7] Popup de editar tarefa
+
+  - [7] Popup de editar tarefa
   Faz as ações e volta para [5]
 
 - [8] Popup de remover tarefa
@@ -39,6 +43,18 @@ import {Counter} from "../imports/ui/Counter";
 
 - [9] Ver perfil
 - [10] Editar perfil
+
+[1]
+|- [3]
+[2]
+[0.4] Tela genérica + Drawer
+|- [4]
+|- [5]
+    |- [7]
+    |- [8]
+    |- [6]
+|- [9]
+    |- [10]
 */
 
 Meteor.startup(() => {
@@ -47,12 +63,23 @@ Meteor.startup(() => {
   root.render(
   <BrowserRouter>
     <Routes>
-      <Route index path="/" element={<App/>}/>
-      <Route path="counter" element={
-        <PrivateRoute>
-          <Counter />
-        </PrivateRoute>
-      }/>
+      <Route path="/" >
+        <Route path="login" >
+          <Route path="forgot" />
+        </Route>
+        <Route path="cadastro" />
+      </Route>
+      <Route path="home">
+        <Route path="dashboard"/>
+        <Route path="view">
+          <Route path="edit"/>
+          <Route path="remove"/>
+          <Route path="add"/>
+        </Route>
+        <Route path="profile">
+          <Route path="edit"/>
+        </Route>
+      </Route>
     </Routes>
   </BrowserRouter>
 );
