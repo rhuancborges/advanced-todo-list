@@ -4,6 +4,7 @@ import {React, useState} from "react";
 import {useTracker} from "meteor/react-meteor-data";
 import { Meteor } from "meteor/meteor";
 import {LoginForm}  from "./LoginForm";
+import { Navigate } from 'react-router-dom';
 
 // Tema global
 const theme = createTheme({
@@ -55,9 +56,9 @@ const theme = createTheme({
 export const App = () => {
   const user = useTracker(() => Meteor.user()); // Para vigiar mudanças de usuário no banco de dados
   
-  return(
+  return user ? <Navigate to = "counter" /> :(
   <ThemeProvider theme={theme}>
     <CssBaseline />
-    <LoginForm user={user}/>
-  </ThemeProvider>);
+    <LoginForm />
+  </ThemeProvider>) ;
 };

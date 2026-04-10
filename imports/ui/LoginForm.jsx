@@ -4,7 +4,9 @@ import {Meteor} from "meteor/meteor";
 import {useTracker} from "meteor/react-meteor-data";
 import { FormControl, TextField, Card } from '@mui/material';
 
-export const LoginForm = ({user}) => {
+export const LoginForm = () => {
+    const user = useTracker(() => Meteor.user()); // Para vigiar mudanças de usuário no banco de dados
+    
     // Use states para dados do usuário
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -28,9 +30,6 @@ export const LoginForm = ({user}) => {
         setPassword("");
     };
 
-    const handleLogout =  () => {
-        Meteor.logout();
-    }
 
     return (
     <Box sx={{p: 2, display: "flex", flexDirection: "column", alignItems: "center", gap: 2}}>
