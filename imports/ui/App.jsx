@@ -53,9 +53,11 @@ const theme = createTheme({
 });
 
 export const App = () => {
+  const user = useTracker(() => Meteor.user()); // Para vigiar mudanças de usuário no banco de dados
+  
   return(
   <ThemeProvider theme={theme}>
     <CssBaseline />
-    <LoginForm />
+    <LoginForm user={user}/>
   </ThemeProvider>);
 };
