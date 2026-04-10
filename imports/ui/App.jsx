@@ -67,7 +67,7 @@ export const App = () => {
   return(
   <ThemeProvider theme={theme}>
     <CssBaseline />
-    <Box sx={{p: 2, display: "flex", flexDirection: "column", alignItems: "center", gap: 2}}>s
+    <Box sx={{p: 2, display: "flex", flexDirection: "column", alignItems: "center", gap: 2}}>
       {/*Se há um erro (controlado pelo use state isError) mostra um componente Alert 
       com a mensagem do erro (controlada pelo use state errorMessage) */}
       {isError ? (
