@@ -39,7 +39,17 @@ const theme = createTheme({
   "shape": {
     "borderRadius": 8
   },
-  "spacing": 9
+  "spacing": 9,
+  "components": {
+    "MuiCssBaseline": {
+      "styleOverrides": {
+        "body":{
+          "backgroundColor": "#1d1c1c",
+          "backgroundImage": 'radial-gradient(circle, #243d69, #091733 100%)'
+        }
+      }
+    }
+  }
 });
 
 export const App = () => {

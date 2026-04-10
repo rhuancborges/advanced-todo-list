@@ -42,7 +42,7 @@ export const LoginForm = () => {
             {errorMessage}
         </Alert>
         ): <div></div>}
-        <Card variant="outlined">
+        <Card raised="true">
             <CardContent sx={{p: 2, display: "flex", flexDirection: "column", alignItems: "center", gap: 2}}>
                 <Typography variant="h3" sx={{"fontFamily": "monospace", "font-weight": "bold", "font-size": 30}}>Sign In</Typography>
                 <FormControl>
