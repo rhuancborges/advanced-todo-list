@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router';
+import { Navigate } from 'react-router-dom';
 import { useTracker } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
 
@@ -10,7 +10,7 @@ export const PrivateRoute = ({ children }) => {
   }));
 
   if (isLoading) return <div>Carregando...</div>;
-  let navigate = useNavigate();
+
   // Se não houver usuário, manda para a rota de login
-  return user ? children : navigate("/");
+  return user ? children : <Navigate to="/" />;
 };
