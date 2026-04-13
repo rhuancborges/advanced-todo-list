@@ -2,7 +2,7 @@ import { createRoot } from "react-dom/client";
 import { Meteor } from "meteor/meteor";
 import { App } from "/imports/ui/App";
 import { BrowserRouter, Routes, Route} from "react-router-dom";
-import "./main.css";
+//import "./main.css";
 import { PrivateRoute } from "../imports/ui/PrivateRoute";
 import {DrawerLayout} from "../imports/ui/DrawerLayout";
 
@@ -65,12 +65,14 @@ Meteor.startup(() => {
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<App/>} >
-        <Route path="login" element={<LoginForm/>} >
-          <Route path="forgot" />
-        </Route>
+        <Route index element={<LoginForm/>} />
+        <Route path="forgot" />
         <Route path="cadastro" />
       </Route>
-      <Route path="home" element={<DrawerLayout/>}>
+      <Route path="home" element={
+          <PrivateRoute>
+            <DrawerLayout/>
+          </PrivateRoute>}>
         <Route path="dashboard"/>
         <Route path="view">
           <Route path="edit"/>

@@ -72,7 +72,6 @@ export const LoginForm = () => {
                     </Button>
                 </CardContent>
             </Card>
-            <Typography variant="h2">{user ? user.username : "Não há usuário logado"}</Typography>
         </Box>
     </ThemeProvider>
     );

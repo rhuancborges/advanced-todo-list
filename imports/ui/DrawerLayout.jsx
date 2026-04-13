@@ -13,6 +13,10 @@ export const DrawerLayout = () => {
     const toggleDrawer = (newOpen) => {
         setOpen(newOpen);
     };
+    const handleLogout = () => {
+        navigate("/");
+        Meteor.logout();
+    }
    
 
     const list = (
@@ -24,6 +28,7 @@ export const DrawerLayout = () => {
             <Button onClick={()=>navigate("/home")}>HOME</Button>
             <Button onClick={()=>navigate("/view")}>Lista de Tarefas</Button>
             <Button onClick={()=>navigate("/profile/edit")}>Editar Perfil</Button>
+            <Button variant="outlined" onClick={()=>handleLogout()}>Logout</Button>
         </Box>
         </>
     );
