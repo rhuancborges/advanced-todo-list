@@ -1,11 +1,12 @@
 import { createRoot } from "react-dom/client";
 import { Meteor } from "meteor/meteor";
 import { App } from "/imports/ui/App";
-import { BrowserRouter, Routes, Route} from "react-router";
+import { BrowserRouter, Routes, Route} from "react-router-dom";
 import "./main.css";
 import { PrivateRoute } from "../imports/ui/PrivateRoute";
-import {Counter} from "../imports/ui/Counter";
-import { Profiler } from "react";
+import {DrawerLayout} from "../imports/ui/DrawerLayout";
+
+import { LoginForm } from "../imports/ui/LoginForm";
 
 /* Esquema de rotas:
 
@@ -63,13 +64,13 @@ Meteor.startup(() => {
   root.render(
   <BrowserRouter>
     <Routes>
-      <Route path="/" >
-        <Route path="login" >
+      <Route path="/" element={<App/>} >
+        <Route path="login" element={<LoginForm/>} >
           <Route path="forgot" />
         </Route>
         <Route path="cadastro" />
       </Route>
-      <Route path="home">
+      <Route path="home" element={<DrawerLayout/>}>
         <Route path="dashboard"/>
         <Route path="view">
           <Route path="edit"/>
