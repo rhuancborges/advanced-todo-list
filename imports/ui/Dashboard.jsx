@@ -3,7 +3,7 @@ import {theme} from "./theme"
 
 export const Dashboard = () => {
     return (
-        <Box sx={{marginLeft: 25}}>
+        <Box sx={{marginLeft: 50, marginTop: 9}}>
             <Grid container rowSpacing={4} columnSpacing={5} >
                 <Card>
                     <CardContent>1</CardContent>
@@ -12,7 +12,8 @@ export const Dashboard = () => {
                     <CardContent>2</CardContent>
                 </Card>
             </Grid>
-            <Grid container rowSpacing={4} columnSpacing={5} >
+            
+            <Grid container sx={{marginTop: 2}}rowSpacing={4} columnSpacing={5} >
                 <Card>
                     <CardContent>1</CardContent>
                 </Card>

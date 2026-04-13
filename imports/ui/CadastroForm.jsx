@@ -6,7 +6,7 @@ import { FormControl, TextField, Card } from '@mui/material';
 import {theme} from "./theme";
 import { NavLink } from "react-router";
 
-export const LoginForm = () => {
+export const CadastroForm = () => {
     const user = useTracker(() => Meteor.user()); // Para vigiar mudanças de usuário no banco de dados
     
     // Use states para dados do usuário
@@ -46,7 +46,7 @@ export const LoginForm = () => {
             ): <div></div>}
             <Card raised={true}>
                 <CardContent sx={{p: 2, display: "flex", flexDirection: "column", alignItems: "center", gap: 2}}>
-                    <Typography variant="h3" sx={{"fontFamily": "monospace", "fontWeight": "bold", "fontSize": 30}}>Login</Typography>
+                    <Typography variant="h3" sx={{"fontFamily": "monospace", "fontWeight": "bold", "fontSize": 30}}>Cadastre-se</Typography>
                     <FormControl>
                         <TextField 
                             id="my-input" 
@@ -63,7 +63,6 @@ export const LoginForm = () => {
                             required
                             onChange={(e) => setPassword(e.target.value)} />
                     </FormControl>
-                    <NavLink style={{color: "white", display: "flex", flexDirection: "flex-end", fontSize: 12}} to="/forgot">Esqueci minha senha</NavLink>
                     <Button
                         type="submit"
                         fullWidth
@@ -72,7 +71,7 @@ export const LoginForm = () => {
                     >
                     Sign in
                     </Button>
-                    <NavLink style={{color: "white"}} to="/cadastro">Não tem uma conta? Cadastre-se</NavLink>
+                    <NavLink style={{color: "white"}} to="/login">Já tem uma conta? Faça Login!</NavLink>
                 </CardContent>
             </Card>
         </Box>

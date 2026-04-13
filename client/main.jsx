@@ -8,6 +8,7 @@ import {DrawerLayout} from "../imports/ui/DrawerLayout";
 import { Dashboard } from "../imports/ui/Dashboard";
 import { LoginForm } from "../imports/ui/LoginForm";
 import {Counter} from "../imports/ui/Counter"
+import { CadastroForm } from "../imports/ui/CadastroForm";
 
 /* Esquema de rotas:
 
@@ -67,8 +68,10 @@ Meteor.startup(() => {
     <Routes>
       <Route path="/" element={<App/>} >
         <Route index element={<LoginForm/>} />
-        <Route path="forgot" />
-        <Route path="cadastro" />
+        <Route path="/login" element={<LoginForm/>} >
+          <Route path="forgot" />
+        </Route>
+        <Route path="cadastro" element={<CadastroForm/>} />
       </Route>
       <Route path="home" element={
           <PrivateRoute>
