@@ -5,6 +5,7 @@ import {useTracker} from "meteor/react-meteor-data";
 import {Meteor} from "meteor/meteor";
 import { Navigate, Outlet, useNavigate } from "react-router";
 import {Dehaze, Close} from '@mui/icons-material';
+import { alpha } from "@mui/material/styles";
 
 export const DrawerLayout = () => {
     const [open, setOpen] = useState(false);
@@ -21,13 +22,18 @@ export const DrawerLayout = () => {
 
     const list = (
         <>
-        <Close onClick={()=>toggleDrawer(false)} />
+        <Close sx={{cursor: "pointer", 
+            width: 40, height: 40, p: 1, 
+            borderRadius: "50%", 
+            "&:hover": {
+                backgroundColor: alpha(theme.palette.background.default, 0.45)
+            }}} 
+        onClick={()=>toggleDrawer(false)} />
         <Box sx={{p: 4, display: "flex", flexDirection: "column", alignItems: "center"}}>
-            <Avatar/>
+            <Avatar sx={{cursor: "pointer"}} onClick={()=>navigate("/profile")}/>
             <Typography>{user.username}</Typography>
             <Button onClick={()=>navigate("/home")}>HOME</Button>
-            <Button onClick={()=>navigate("/view")}>Lista de Tarefas</Button>
-            <Button onClick={()=>navigate("/profile/edit")}>Editar Perfil</Button>
+            <Button onClick={()=>navigate("/home/view")}>Lista de Tarefas</Button>
             <Button variant="outlined" onClick={()=>handleLogout()}>Logout</Button>
         </Box>
         </>
@@ -36,8 +42,14 @@ export const DrawerLayout = () => {
     return(
         <ThemeProvider theme={theme}>
             <CssBaseline/>
-            <Dehaze onClick={()=>toggleDrawer(true)}/>
-            <Drawer variant="persistent"open={open} >{list}</Drawer>
+            <Dehaze sx={{cursor: "pointer", 
+                width: 40, height: 40, p: 1,  
+                borderRadius: "50%", 
+                "&:hover": {
+                    backgroundColor: alpha(theme.palette.info.main, 0.15)
+                }
+            }} onClick={()=>toggleDrawer(true)}/>
+            <Drawer variant="persistent" open={open} >{list}</Drawer>
             <Outlet/>
         </ThemeProvider>
     );

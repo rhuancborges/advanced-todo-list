@@ -5,8 +5,9 @@ import { BrowserRouter, Routes, Route} from "react-router-dom";
 //import "./main.css";
 import { PrivateRoute } from "../imports/ui/PrivateRoute";
 import {DrawerLayout} from "../imports/ui/DrawerLayout";
-
+import { Dashboard } from "../imports/ui/Dashboard";
 import { LoginForm } from "../imports/ui/LoginForm";
+import {Counter} from "../imports/ui/Counter"
 
 /* Esquema de rotas:
 
@@ -73,8 +74,8 @@ Meteor.startup(() => {
           <PrivateRoute>
             <DrawerLayout/>
           </PrivateRoute>}>
-        <Route path="dashboard"/>
-        <Route path="view">
+        <Route index element={<Dashboard/>}/>
+        <Route path="view" element={<Counter/>}>
           <Route path="edit"/>
           <Route path="remove"/>
           <Route path="add"/>
