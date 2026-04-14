@@ -3,7 +3,8 @@ import {theme} from "./theme"
 import { useNavigate } from "react-router";
 import { alpha } from "@mui/material";
 import { TasksCollection } from "../api/TasksCollection";
-import {useSubscribe} from "meteor/react-meteor-data";
+import {useSubscribe, useTracker} from "meteor/react-meteor-data";
+import {Meteor} from "meteor/meteor";
 
 export const Dashboard = () => {
     const navigate = useNavigate();
@@ -22,11 +23,20 @@ export const Dashboard = () => {
         boxShadow: 6,
         }
     }
-
+   
     const isLoading = useSubscribe('tasks');
-
-    const countConcluidas = TasksCollection.find({situacao: "Concluída"}).count();
-    const countTotal = TasksCollection.find().count();
+    
+    const user = useTracker(() => Meteor.user());
+    const countConcluidas = useTracker(() => {
+        if(!user){
+            return 0;
+        }
+        return TasksCollection.find({situacao: "Concluída"}).count()});
+    const countTotal = useTracker(() =>{
+        if(!user){
+            return 0;
+        } 
+        return TasksCollection.find().count()});
 
     return (
         <Box sx={{marginLeft: 35, marginBottom: 5}}>

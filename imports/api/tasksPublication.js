@@ -2,9 +2,9 @@ import {Meteor} from 'meteor/meteor';
 import {TasksCollection} from './TasksCollection';
 
 Meteor.publish('tasks', function (){
-    if (!this.user._id) {
+    if (!this.userId) {
         return this.ready();
     }
     return TasksCollection.find({$or: 
-        [{tarefaPessoal: false},{tarefaPessoal: true, usuarioCriador: this.user._id}]});
+        [{tarefaPessoal: false},{tarefaPessoal: true, usuarioCriador: this.userId}]});
 });
