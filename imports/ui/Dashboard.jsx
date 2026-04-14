@@ -1,12 +1,14 @@
 import { Card, Typography, Box, Stack, Grid, CardContent } from "@mui/material";
 import {theme} from "./theme"
 import { useNavigate } from "react-router";
+import { alpha } from "@mui/material";
 
 export const Dashboard = () => {
     const navigate = useNavigate();
     const sxCard = {
         minHeight: 260,
         height: "100%",
+        background: alpha(theme.palette.background.paper, 0.8),
         width: 280,
         borderRadius: 3,
         display: "flex",
@@ -18,7 +20,7 @@ export const Dashboard = () => {
         }
     }
     return (
-        <Box sx={{marginLeft: 35}}>
+        <Box sx={{marginLeft: 35, marginBottom: 5}}>
             <Typography variant="h5" sx={{marginLeft:20, marginBottom: 2}}> Olá, seja bem vindo ao To-Do List!</Typography>
             <Grid container rowSpacing={4} columnSpacing={1}>
                 <Grid item size={5}>
