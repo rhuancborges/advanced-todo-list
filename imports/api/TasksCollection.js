@@ -60,5 +60,3 @@ export const TasksSchema = new SimpleSchema({
     optional: true,
   }
 });
-
-TasksCollection.attachSchema(TasksSchema);
