@@ -1,7 +1,8 @@
-import {List, ListItem, ListItemText, ListItemAvatar, Avatar, Typography, Chip} from '@mui/material';
+import {List, ListItem, ListItemText, ListItemAvatar, Avatar, Alert, Typography, Chip, Alert} from '@mui/material';
 import { TasksCollection } from '../api/TasksCollection';
 import {useSubscribe, useTracker} from "meteor/react-meteor-data";
 import { Meteor} from "meteor/meteor";
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 export const View = () => {
     const isLoading = useSubscribe('tasks');
@@ -16,7 +17,9 @@ export const View = () => {
     return (
     <List sx={{ width: '100%', maxWidth:600, bgcolor: 'background.paper' }}>
       {tasks.map((task) => (
-        <ListItem>
+        <ListItem secondaryAction={
+            <MoreVertIcon sx={{"&:hover": {cursor: "pointer"}}} ></MoreVertIcon>
+        }>
             <ListItemAvatar>
                 <Avatar></Avatar>
             </ListItemAvatar>
