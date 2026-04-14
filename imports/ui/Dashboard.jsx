@@ -39,46 +39,45 @@ export const Dashboard = () => {
         return TasksCollection.find().count()});
 
     return (
-        <Box sx={{marginLeft: 35, marginBottom: 5}}>
-            <Typography variant="h5" sx={{marginLeft:20, marginBottom: 2}}> Olá, seja bem vindo ao To-Do List!</Typography>
-            <Grid container rowSpacing={4} columnSpacing={1}>
-                <Grid item size={5}>
-                    <Card elevation={4}
-                        sx={sxCard}>
-                        <CardContent>
-                            <Typography variant="h4">Total de tarefas cadastradas</Typography>
-                            <Typography variant="h2" sx={{marginTop: 5}}>{countTotal}</Typography>
-                        </CardContent>
-                    </Card>
-                </Grid>
-                <Grid item size={5}>
-                    <Card elevation={4}
-                        sx={sxCard}>
-                        <CardContent>
-                            <Typography variant="h4">Total de tarefas concluídas</Typography>
-                            <Typography variant="h2" sx={{marginTop: 5}}>{countConcluidas}</Typography>
-                        </CardContent>
-                    </Card>
-                </Grid>
-                <Grid item size={5}>
-                   <Card elevation={4}
-                        sx={sxCard}>
-                        <CardContent>
-                            <Typography variant="h4">Total de tarefas a serem concluídas</Typography>
-                            <Typography variant="h2" sx={{marginTop: 5}}>{countTotal-countConcluidas}</Typography>
-                        </CardContent>
-                    </Card>
-                </Grid>
-                <Grid item size={5}>
-                    <Card elevation={4}
-                        sx={{...sxCard, "&:hover":{
-                            ...sxCard["&:hover"], cursor:"pointer"}}} onClick={()=>navigate("/home/view")}>
-                        <CardContent>
-                            <Typography variant="h3" sx={{marginTop: 5}}>Visualizar tarefas</Typography>
-                        </CardContent>
-                    </Card>
-                </Grid>
+        <>
+        <Typography variant="h5" sx={{marginLeft:20, marginBottom: 2}}> Olá, seja bem vindo ao To-Do List!</Typography>
+        <Grid container rowSpacing={4} columnSpacing={1}>
+            <Grid item size={5}>
+                <Card elevation={4}
+                    sx={sxCard}>
+                    <CardContent>
+                        <Typography variant="h4">Total de tarefas cadastradas</Typography>
+                        <Typography variant="h2" sx={{marginTop: 5}}>{countTotal}</Typography>
+                    </CardContent>
+                </Card>
             </Grid>
-        </Box>
-    );
+            <Grid item size={5}>
+                <Card elevation={4}
+                    sx={sxCard}>
+                    <CardContent>
+                        <Typography variant="h4">Total de tarefas concluídas</Typography>
+                        <Typography variant="h2" sx={{marginTop: 5}}>{countConcluidas}</Typography>
+                    </CardContent>
+                </Card>
+            </Grid>
+            <Grid item size={5}>
+                <Card elevation={4}
+                    sx={sxCard}>
+                    <CardContent>
+                        <Typography variant="h4">Total de tarefas a serem concluídas</Typography>
+                        <Typography variant="h2" sx={{marginTop: 5}}>{countTotal-countConcluidas}</Typography>
+                    </CardContent>
+                </Card>
+            </Grid>
+            <Grid item size={5}>
+                <Card elevation={4}
+                    sx={{...sxCard, "&:hover":{
+                        ...sxCard["&:hover"], cursor:"pointer"}}} onClick={()=>navigate("/home/view")}>
+                    <CardContent>
+                        <Typography variant="h3" sx={{marginTop: 5}}>Visualizar tarefas</Typography>
+                    </CardContent>
+                </Card>
+            </Grid>
+        </Grid>
+        </>);
 };

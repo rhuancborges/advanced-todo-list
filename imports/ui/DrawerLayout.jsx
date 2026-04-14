@@ -50,7 +50,9 @@ export const DrawerLayout = () => {
                 }
             }} onClick={()=>toggleDrawer(true)}/>
             <Drawer variant="persistent" open={open} >{list}</Drawer>
-            <Outlet/>
+             <Box sx={{marginLeft: 35, marginBottom: 5}}>
+                <Outlet/>
+            </Box>
         </ThemeProvider>
     );
 } 
