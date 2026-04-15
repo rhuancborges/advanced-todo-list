@@ -9,6 +9,7 @@ import { Dashboard } from "../imports/ui/Dashboard";
 import { LoginForm } from "../imports/ui/LoginForm";
 import {View} from "../imports/ui/View"
 import { CadastroForm } from "../imports/ui/CadastroForm";
+import {Counter} from "../imports/ui/Counter"
 
 /* Esquema de rotas:
 
@@ -82,7 +83,7 @@ Meteor.startup(() => {
         <Route path="view" element={<PrivateRoute><View/></PrivateRoute>}>
           <Route path="edit"/>
           <Route path="remove"/>
-          <Route path="add"/>
+          <Route path="add" element={<Counter/>}/>
         </Route>
         <Route path="profile">
           <Route path="edit"/>

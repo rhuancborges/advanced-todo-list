@@ -1,8 +1,11 @@
-import {List, ListItem, ListItemText, ListItemAvatar, Avatar, Alert, Typography, Chip, Alert} from '@mui/material';
+import {List, ListItem, ListItemText, ListItemAvatar, Avatar, Alert, Typography,
+     Chip, Alert, Fab, Box,
+     Stack} from '@mui/material';
 import { TasksCollection } from '../api/TasksCollection';
 import {useSubscribe, useTracker} from "meteor/react-meteor-data";
 import { Meteor} from "meteor/meteor";
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import {MoreVert, Add} from '@mui/icons-material';
+import {useNavigate } from "react-router";
 
 export const View = () => {
     const isLoading = useSubscribe('tasks');
@@ -13,20 +16,28 @@ export const View = () => {
         }
         return TasksCollection.find().fetch();
     });
-    
+    const navigate = useNavigate();
     return (
-    <List sx={{ width: '100%', maxWidth:600, bgcolor: 'background.paper' }}>
-      {tasks.map((task) => (
-        <ListItem secondaryAction={
-            <MoreVertIcon sx={{"&:hover": {cursor: "pointer"}}} ></MoreVertIcon>
-        }>
-            <ListItemAvatar>
-                <Avatar></Avatar>
-            </ListItemAvatar>
-            <ListItemText primary={task.nome} secondary={task.usuarioCriador}></ListItemText>
-        </ListItem>
-      ))}
-    </List>
+    <>
+        <List sx={{ width: '100%', maxWidth:600, bgcolor: 'background.paper' }}>
+        {tasks.map((task) => (
+            <ListItem secondaryAction={
+                <MoreVert sx={{"&:hover": {cursor: "pointer"}}} ></MoreVert>
+            }>
+                <ListItemAvatar>
+                    <Avatar></Avatar>
+                </ListItemAvatar>
+                <ListItemText primary={task.nome} secondary={task.usuarioCriador}></ListItemText>
+            </ListItem>
+        ))}
+        
+        </List>
+        <Stack sx={{width: "60%", display: "flex", flexDirection: "row", justifyContent: "flex-end"}}>
+            <Fab sx={{"&:hover":{cursor: "pointer"}}} onClick={()=>navigate("add")}>
+                <Add></Add>
+            </Fab>
+        </Stack>
+    </>
     );
 
 };

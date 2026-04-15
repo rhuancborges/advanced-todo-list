@@ -50,7 +50,7 @@ export const DrawerLayout = () => {
                 }
             }} onClick={()=>toggleDrawer(true)}/>
             <Drawer variant="persistent" open={open} >{list}</Drawer>
-             <Box sx={{marginLeft: 35, marginBottom: 5}}>
+            <Box sx={{display: "flex", flexDirection: "column", alignItems: "center"}}>
                 <Outlet/>
             </Box>
         </ThemeProvider>

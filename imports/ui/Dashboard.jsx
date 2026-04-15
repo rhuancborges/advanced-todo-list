@@ -16,8 +16,8 @@ export const Dashboard = () => {
         width: 280,
         borderRadius: 3,
         display: "flex",
-        alignItems: "flex-star",
-        justifyContent: "center",
+        flexDirection: "row",
+        justifyContent: "flex-start",
         "&:hover": {
         transform: "translateY(-4px)",
         boxShadow: 6,
@@ -40,9 +40,10 @@ export const Dashboard = () => {
 
     return (
         <>
-        <Typography variant="h5" sx={{marginLeft:20, marginBottom: 2}}> Olá, seja bem vindo ao To-Do List!</Typography>
-        <Grid container rowSpacing={4} columnSpacing={1}>
-            <Grid item size={5}>
+        <Typography variant="h5" sx={{marginBottom: 2}}> Olá, seja bem vindo ao To-Do List!</Typography>
+        <Grid sx={{display: "flex", justifyContent: "center"}}
+        container rowSpacing={4} >
+            <Grid item size={6} sx={{display: "flex", flexDirection: "row", justifyContent:"center"}}>
                 <Card elevation={4}
                     sx={sxCard}>
                     <CardContent>
@@ -51,7 +52,7 @@ export const Dashboard = () => {
                     </CardContent>
                 </Card>
             </Grid>
-            <Grid item size={5}>
+            <Grid item size={4} sx={{display: "flex", flexDirection: "row", justifyContent:"flex-start"}}>
                 <Card elevation={4}
                     sx={sxCard}>
                     <CardContent>
@@ -60,7 +61,7 @@ export const Dashboard = () => {
                     </CardContent>
                 </Card>
             </Grid>
-            <Grid item size={5}>
+            <Grid item size={6} sx={{display: "flex", flexDirection: "row", justifyContent:"center"}}>
                 <Card elevation={4}
                     sx={sxCard}>
                     <CardContent>
@@ -69,7 +70,7 @@ export const Dashboard = () => {
                     </CardContent>
                 </Card>
             </Grid>
-            <Grid item size={5}>
+            <Grid item size={4} sx={{display: "flex", flexDirection: "row", justifyContent:"flex-start"}}>
                 <Card elevation={4}
                     sx={{...sxCard, "&:hover":{
                         ...sxCard["&:hover"], cursor:"pointer"}}} onClick={()=>navigate("/home/view")}>
