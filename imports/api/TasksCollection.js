@@ -1,11 +1,6 @@
 import { Mongo } from 'meteor/mongo';
 import SimpleSchema from 'simpl-schema';
-
-export const TASK_STATUS = {
-  CADASTRADA: 'Cadastrada',
-  EM_ANDAMENTO: 'Em Andamento',
-  CONCLUIDA: 'Concluída',
-};
+import { TASK_STATUS } from './taskStatus';
 
 export const TasksCollection = new Mongo.Collection('tasks');
 
@@ -39,7 +34,7 @@ export const TasksSchema = new SimpleSchema({
 
   usuarioCriador: {
     type: String,
-    label: 'Usuário criador',
+    label: 'Usuário criador'
   },
 
   tarefaPessoal: {

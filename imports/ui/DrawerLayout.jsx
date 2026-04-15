@@ -33,7 +33,7 @@ export const DrawerLayout = () => {
             <Avatar sx={{cursor: "pointer"}} onClick={()=>navigate("/profile")}/>
             <Typography>{user.username}</Typography>
             <Button onClick={()=>navigate("/home")}>HOME</Button>
-            <Button onClick={()=>navigate("/home/view")}>Lista de Tarefas</Button>
+            <Button onClick={()=>navigate("view")}>Lista de Tarefas</Button>
             <Button variant="outlined" onClick={()=>handleLogout()}>Logout</Button>
         </Box>
         </>

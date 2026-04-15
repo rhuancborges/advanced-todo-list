@@ -5,7 +5,7 @@ import { TasksCollection } from '../api/TasksCollection';
 import {useSubscribe, useTracker} from "meteor/react-meteor-data";
 import { Meteor} from "meteor/meteor";
 import {MoreVert, Add} from '@mui/icons-material';
-import {useNavigate } from "react-router";
+import {Outlet, useNavigate } from "react-router";
 
 export const View = () => {
     const isLoading = useSubscribe('tasks');
@@ -21,7 +21,7 @@ export const View = () => {
     <>
         <List sx={{ width: '100%', maxWidth:600, bgcolor: 'background.paper' }}>
         {tasks.map((task) => (
-            <ListItem secondaryAction={
+            <ListItem key={task._id} secondaryAction={
                 <MoreVert sx={{"&:hover": {cursor: "pointer"}}} ></MoreVert>
             }>
                 <ListItemAvatar>
@@ -37,6 +37,7 @@ export const View = () => {
                 <Add></Add>
             </Fab>
         </Stack>
+        <Outlet/>
     </>
     );
 

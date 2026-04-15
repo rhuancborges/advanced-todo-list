@@ -2,9 +2,9 @@ import {Meteor} from "meteor/meteor";
 import {TasksCollection, TasksSchema} from "./TasksCollection"
 
 Meteor.methods({
-    "task.create"(doc){
-        TasksSchema.validate(doc);
-        const user = Meteor.users.find({_id: this.userId})
+    async "task.create"(doc){
+        const user = await Meteor.users.findOneAsync({_id: this.userId}, {fields: {username: 1}});
+        TasksSchema.validate({...doc, usuarioCriador: user.username});
         return TasksCollection.insertAsync({...doc, usuarioCriador: user.username});
     },
     "task.update"(_id, doc){
