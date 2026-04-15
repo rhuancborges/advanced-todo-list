@@ -1,11 +1,12 @@
 import {List, ListItem, ListItemText, ListItemAvatar, Avatar, Alert, Typography,
      Chip, Alert, Fab, Box,
-     Stack} from '@mui/material';
+     Stack, Menu, MenuItem} from '@mui/material';
 import { TasksCollection } from '../api/TasksCollection';
 import {useSubscribe, useTracker} from "meteor/react-meteor-data";
 import { Meteor} from "meteor/meteor";
 import {MoreVert, Add} from '@mui/icons-material';
 import {Outlet, useNavigate } from "react-router";
+import { useState } from 'react';
 
 export const View = () => {
     const isLoading = useSubscribe('tasks');
@@ -17,13 +18,34 @@ export const View = () => {
         return TasksCollection.find().fetch();
     });
     const navigate = useNavigate();
+
+    const [ancora, setAncora] = useState(null);
+    const open = Boolean(ancora);
+
+    const handleClick = (e) => {
+        setAncora(e.currentTarget);
+       
+    }
+
+    const handleClose = () => {
+        setAncora(null);
+    }
+
     return (
     <>
         <List sx={{ width: '100%', maxWidth:600, bgcolor: 'background.paper' }}>
         {tasks.map((task) => (
             <ListItem key={task._id} secondaryAction={
-                <MoreVert sx={{"&:hover": {cursor: "pointer"}}} ></MoreVert>
+                <MoreVert sx={{"&:hover": {cursor: "pointer"}}} onClick={handleClick} /> 
             }>
+                <Menu
+                    anchorEl={ancora}
+                    open={open}
+                    onClose={handleClose}
+                >
+                    <MenuItem onClick={() => navigate("edit")}>Editar tarefa</MenuItem>
+                    <MenuItem onClick={() => navigate("remove")}>Remover tarefa</MenuItem>
+                </Menu>
                 <ListItemAvatar>
                     <Avatar></Avatar>
                 </ListItemAvatar>
