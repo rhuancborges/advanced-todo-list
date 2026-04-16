@@ -43,8 +43,8 @@ export const View = () => {
                     open={open}
                     onClose={handleClose}
                 >
-                    <MenuItem onClick={() => navigate("edit")}>Editar tarefa</MenuItem>
-                    <MenuItem onClick={() => navigate("remove")}>Remover tarefa</MenuItem>
+                    <MenuItem onClick={() => navigate("edit", {state: task})}>Editar tarefa</MenuItem>
+                    <MenuItem onClick={() => navigate("remove", {state: task})}>Remover tarefa</MenuItem>
                 </Menu>
                 <ListItemAvatar>
                     <Avatar></Avatar>
