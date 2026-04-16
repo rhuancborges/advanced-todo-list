@@ -31,7 +31,7 @@ export const TaskDetail = () => {
                     {task.tarefaPessoal ? <Chip color="secondary" label="Tarefa Pessoal"/> : ""}
                 </Stack>
                 <Typography variant="h6">Data da tarefa</Typography>
-                <Typography variant="body1" sx={{maxWidth: "70%"}}>{task.data.toString()}</Typography>   
+                <Typography variant="body1" sx={{maxWidth: "70%"}}>{task.data.toLocaleDateString('pt-BR')}</Typography>   
                 <Typography variant="h6">Usuário criador da tarefa</Typography>
                 <Typography variant="body1">{task.usuarioCriador}</Typography>          
                 <Stack sx={{width: "40%", display: "flex", flexDirection: "row", justifyContent: "space-around"}}>

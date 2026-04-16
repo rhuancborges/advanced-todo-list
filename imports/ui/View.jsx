@@ -20,11 +20,12 @@ export const View = () => {
     const navigate = useNavigate();
 
     const [ancora, setAncora] = useState(null);
+    const [taskSelecionada, setTaskSelecionada] = useState(null);
     const open = Boolean(ancora);
 
-    const handleClick = (e) => {
+    const handleClick = (e, task) => {
         setAncora(e.currentTarget);
-       
+        setTaskSelecionada(task);
     }
 
     const handleClose = () => {
@@ -36,16 +37,8 @@ export const View = () => {
         <List sx={{ width: '100%', maxWidth:600, bgcolor: 'background.paper' }}>
         {tasks.map((task) => (
             <ListItem key={task._id} secondaryAction={
-                <MoreVert sx={{"&:hover": {cursor: "pointer"}}} onClick={handleClick} /> 
+                <MoreVert sx={{"&:hover": {cursor: "pointer"}}} onClick={(e) => handleClick(e,task)} /> 
             }>
-                <Menu
-                    anchorEl={ancora}
-                    open={open}
-                    onClose={handleClose}
-                >
-                    <MenuItem onClick={() => navigate("edit", {state: task})}>Editar tarefa</MenuItem>
-                    <MenuItem onClick={() => navigate("remove", {state: task})}>Remover tarefa</MenuItem>
-                </Menu>
                 <Stack sx={{display: "flex", flexDirection: "row", "&:hover": {cursor: "pointer"}}} onClick={()=>navigate("task-detail", {state: task})}>
                     <ListItemAvatar sx={{display: "flex", alignSelf: "center"}}>
                         <Avatar></Avatar>
@@ -54,6 +47,14 @@ export const View = () => {
                 </Stack>
             </ListItem>
         ))}
+            <Menu
+                    anchorEl={ancora}
+                    open={open}
+                    onClose={handleClose}
+                >
+                    <MenuItem onClick={() => navigate("edit", {state: taskSelecionada})}>Editar tarefa</MenuItem>
+                    <MenuItem onClick={() => navigate("remove", {state: taskSelecionada})}>Remover tarefa</MenuItem>
+                </Menu>
         
         </List>
         <Stack sx={{width: "60%", display: "flex", flexDirection: "row", justifyContent: "flex-end"}}>

@@ -11,6 +11,7 @@ import {View} from "../imports/ui/View"
 import { CadastroForm } from "../imports/ui/CadastroForm";
 import { TaskAdd } from "../imports/ui/TaskAdd";
 import {TaskDetail} from "../imports/ui/TaskDetail"
+import {TaskEdit} from "../imports/ui/TaskEdit"
 
 /* Esquema de rotas:
 
@@ -82,7 +83,7 @@ Meteor.startup(() => {
         <Route index element={<PrivateRoute><Dashboard/></PrivateRoute>
       }/>
         <Route path="view" element={<PrivateRoute><View/></PrivateRoute>}>
-          <Route path="edit"/>
+          <Route path="edit" element={<PrivateRoute><TaskEdit/></PrivateRoute>}/>
           <Route path="task-detail" element={<PrivateRoute><TaskDetail/></PrivateRoute>}/>
           <Route path="remove"/>
           <Route path="add" element={<PrivateRoute><TaskAdd/></PrivateRoute>}/>

@@ -2,24 +2,25 @@ import { Button, Dialog, DialogTitle, FormControlLabel,
     FormGroup, Box, Stack, Switch, TextField, 
     ToggleButton, ToggleButtonGroup, Typography,
     InputLabel} from "@mui/material";
-import { useNavigate } from "react-router";
+import { useNavigate, useLocation } from "react-router";
 import { useState } from "react";
 import { TASK_STATUS } from "../api/taskStatus";
 import { Close } from "@mui/icons-material";
 import { alpha } from "@mui/material/styles";
 import {theme} from "./theme";
 
-
-export const TaskAdd = () => {
+export const TaskEdit = () => {
+    const task = (useLocation()).state;
     const navigate = useNavigate();
-    const [nome, setNome] = useState("");
-    const [descricao, setDescricao] = useState("");
-    const [status, setStatus] = useState(TASK_STATUS.CADASTRADA);
-    const [date, setDate] = useState((new Date()).toISOString().split('T')[0]);
-    const [isPessoal, setIsPessoal] = useState(false);
+
+    const [nome, setNome] = useState(task.nome);
+    const [descricao, setDescricao] = useState(task.descricao);
+    const [status, setStatus] = useState(task.situacao);
+    const [date, setDate] = useState((task.data).toISOString().split('T')[0]);
+    const [isPessoal, setIsPessoal] = useState(task.tarefaPessoal);
     const [nomeErro, setNomeErro] = useState(false);
     
-    const cadastrar = () => {
+    const atualizar = () => {
         if(nome.trim()===""){
             setNomeErro(true);
             return;
@@ -31,12 +32,12 @@ export const TaskAdd = () => {
             situacao: status,
             data: new Date(date + "T00:00:00"),
             tarefaPessoal: isPessoal,
-            createdAt: new Date(),
+            createdAt: task.createdAt,
             updatedAt: new Date()
         }
-        Meteor.call("task.create", newTask);
-        navigate("/home/view")
 
+        Meteor.call("task.update", task._id, newTask);
+        navigate("/home/view")
     }
     return (
         <Dialog fullScreen={true} open={true}>
@@ -50,7 +51,7 @@ export const TaskAdd = () => {
                         backgroundColor: alpha(theme.palette.background.default, 0.45)
                     }}} onClick={()=>navigate("/home/view")}></Close>
                 </Stack>
-                <DialogTitle>Cadastre nova tarefa</DialogTitle>
+                <DialogTitle>{`Editando tarefa ${task.nome}`}</DialogTitle>
                 <TextField sx={{minWidth: "60%"}} label="Nome da Tarefa" value={nome} 
                 error={nomeErro} onChange={(e) => {
                     setNome(e.target.value)
@@ -71,10 +72,10 @@ export const TaskAdd = () => {
                 </FormGroup>
                 <Stack sx={{width: "40%", display: "flex", flexDirection: "row", justifyContent: "space-around"}}>
                     <Button variant="outlined" onClick={()=>navigate("/home/view")}>Cancelar</Button>
-                    <Button variant="contained" onClick={()=> cadastrar()}>Cadastrar</Button>
+                    <Button variant="contained" onClick={()=> atualizar()}>Concluir</Button>
 
                 </Stack>
             </Box>
         </Dialog>
     );
-}
+};
