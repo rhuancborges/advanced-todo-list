@@ -13,5 +13,7 @@ Meteor.methods({
         }
         Accounts.createUser({ username, password });
     },
-
+    "users.find"(username) {
+        return Accounts.findUserByUsername(username);
+    }
 });

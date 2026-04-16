@@ -2,24 +2,56 @@ import { Button, Dialog, DialogTitle, FormControlLabel,
     FormGroup, Box, Stack, Switch, TextField, 
     ToggleButton, ToggleButtonGroup, Typography,
     InputLabel} from "@mui/material";
-import { useNavigate, useLocation } from "react-router";
+import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
+import {useTracker, useSubscribe} from "meteor/react-meteor-data"
 import { TASK_STATUS } from "../api/taskStatus";
 import { Close } from "@mui/icons-material";
 import { alpha } from "@mui/material/styles";
 import {theme} from "./theme";
+import {Meteor} from "meteor/meteor";
+import { TasksCollection } from "../api/TasksCollection";
 
 
 export const TaskEdit = () => {
-    const task = (useLocation()).state
     const navigate = useNavigate();
-
+    const {taskId} = useParams();
+    const isLoading = useSubscribe("tasks");
+    const {task, isOwner} = useTracker(()=>{
+        const task = TasksCollection.findOne(taskId);
+        const user = Meteor.user();
+        const isOwner = task.usuarioCriador === user.username;
+        return {task: task, isOwner: isOwner};
+    });
     const [nome, setNome] = useState(task.nome);
     const [descricao, setDescricao] = useState(task.descricao);
     const [status, setStatus] = useState(task.situacao);
     const [date, setDate] = useState((task.data).toISOString().split('T')[0]);
     const [isPessoal, setIsPessoal] = useState(task.tarefaPessoal);
     const [nomeErro, setNomeErro] = useState(false);
+
+   if (isLoading()){
+    return <Dialog open>Carregando</Dialog>
+   }
+
+   if(!isOwner){
+     return(<Dialog open={true}>
+            <Box sx={{height: "100%", display: "flex", flexDirection: "column", 
+                alignItems:"center", justifyContent: "space-around"}}>
+                <Stack sx={{width: "80%", height: "1px", display: "flex", flexDirection: "row", justifyContent: "flex-end"}}>
+                    <Close sx={{cursor: "pointer", 
+                    width: 40, height: 40, p: 1, 
+                    borderRadius: "50%", 
+                    "&:hover": {
+                        backgroundColor: alpha(theme.palette.background.default, 0.45)
+                    }}} onClick={()=>navigate("/home/view")}></Close>
+                </Stack>
+                <DialogTitle sx={{width: "60%"}}>{`Você não pode editar essa tarefa porque ela pertence ao usuário ${task.usuarioCriador}`}</DialogTitle>
+            </Box>
+        </Dialog>
+        );
+    }
+    
     
     const atualizar = () => {
         if(nome.trim()===""){

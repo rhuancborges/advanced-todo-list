@@ -8,6 +8,11 @@ Meteor.methods({
         return TasksCollection.insertAsync({...doc, usuarioCriador: user.username});
     },
     "task.update"(_id, doc){
+        const task = TasksCollection.findOneAsync(_id);
+        const user = Meteor.userAsync();
+        if(task.usuarioCriador !== user.username){
+            throw new Meteor.Error("Você não pode editar essa tarefa");
+        }
         return TasksCollection.updateAsync(_id, {$set: {...doc}});
     },
     "task.remove"(_id){

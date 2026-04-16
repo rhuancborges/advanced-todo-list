@@ -40,7 +40,7 @@ export const View = () => {
                 <MoreVert sx={{"&:hover": {cursor: "pointer"}}} onClick={(e) => handleClick(e,task)} /> 
             }>
                 <Stack sx={{display: "flex", flexDirection: "row", "&:hover": {cursor: "pointer"}}} 
-                onClick={()=>navigate("task-detail", {state: task._id})}>
+                onClick={()=>navigate(`task-detail/${task._id}`)}>
                     <ListItemAvatar sx={{display: "flex", alignSelf: "center"}}>
                         <Avatar></Avatar>
                     </ListItemAvatar>
@@ -53,8 +53,8 @@ export const View = () => {
                     open={open}
                     onClose={handleClose}
                 >
-                    <MenuItem onClick={() => navigate("edit", {state: taskSelecionada})}>Editar tarefa</MenuItem>
-                    <MenuItem onClick={() => navigate("remove", {state: taskSelecionada})}>Remover tarefa</MenuItem>
+                    <MenuItem onClick={() => navigate(`edit/${taskSelecionada._id}`)}>Editar tarefa</MenuItem>
+                    <MenuItem onClick={() => navigate(`remove/${taskSelecionada._id}`)}>Remover tarefa</MenuItem>
                 </Menu>
         
         </List>

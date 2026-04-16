@@ -1,4 +1,4 @@
-import { useLocation, useNavigate} from "react-router";
+import { useLocation, useNavigate, useParams} from "react-router-dom";
 import {Stack, Box, Dialog, DialogTitle, Button, ButtonGroup, Typography, Chip} from "@mui/material";
 import { Close } from "@mui/icons-material";
 import { alpha } from "@mui/material/styles";
@@ -14,21 +14,22 @@ const colorChip = {
 };
 
 export const TaskDetail = () => {
-    const location = useLocation();
     const navigate = useNavigate();
-    const taskId = location.state;
-    const l = useSubscribe('tasks');
-
-    const task = useTracker(()=> {return TasksCollection.findOne({_id: taskId})});
+    const {taskId} = useParams();
+    const isLoading = useSubscribe('tasks');
     
-    if (l()){
+    const task  = useTracker(()=> {
+        return TasksCollection.findOne({_id: taskId});
+    });
+    
+    if (isLoading()){
         return <Dialog open> Carregando</Dialog>;
     };
 
     const updateTask = (status) => {
         Meteor.call("task.update", task._id, {situacao: status})
     }
-    //return(<Dialog fullScreen open>{task.nome}</Dialog>)
+    //return(<Dialog fullScreen open>{task._id}</Dialog>)
     return(
         <Dialog fullScreen sx={{display: "flex", justifyContent: "center"}} open={true}>
             <Box sx={{height: "96%", display: "flex", flexDirection: "column", 
