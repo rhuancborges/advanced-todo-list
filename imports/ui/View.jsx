@@ -46,10 +46,12 @@ export const View = () => {
                     <MenuItem onClick={() => navigate("edit", {state: task})}>Editar tarefa</MenuItem>
                     <MenuItem onClick={() => navigate("remove", {state: task})}>Remover tarefa</MenuItem>
                 </Menu>
-                <ListItemAvatar>
-                    <Avatar></Avatar>
-                </ListItemAvatar>
-                <ListItemText primary={task.nome} secondary={task.usuarioCriador}></ListItemText>
+                <Stack sx={{display: "flex", flexDirection: "row", "&:hover": {cursor: "pointer"}}} onClick={()=>navigate("task-detail", {state: task})}>
+                    <ListItemAvatar sx={{display: "flex", alignSelf: "center"}}>
+                        <Avatar></Avatar>
+                    </ListItemAvatar>
+                    <ListItemText sx={{display: "flex", justifySelf: "space-around", flexDirection: "column"}}primary={task.nome} secondary={task.usuarioCriador}></ListItemText>
+                </Stack>
             </ListItem>
         ))}
         

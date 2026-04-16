@@ -10,6 +10,8 @@ import { LoginForm } from "../imports/ui/LoginForm";
 import {View} from "../imports/ui/View"
 import { CadastroForm } from "../imports/ui/CadastroForm";
 import { TaskAdd } from "../imports/ui/TaskAdd";
+import {TaskDetail} from "../imports/ui/TaskDetail"
+
 /* Esquema de rotas:
 
 - [1] Tela de login 
@@ -81,6 +83,7 @@ Meteor.startup(() => {
       }/>
         <Route path="view" element={<PrivateRoute><View/></PrivateRoute>}>
           <Route path="edit"/>
+          <Route path="task-detail" element={<PrivateRoute><TaskDetail/></PrivateRoute>}/>
           <Route path="remove"/>
           <Route path="add" element={<PrivateRoute><TaskAdd/></PrivateRoute>}/>
         </Route>
