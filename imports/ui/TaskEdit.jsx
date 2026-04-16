@@ -9,8 +9,9 @@ import { Close } from "@mui/icons-material";
 import { alpha } from "@mui/material/styles";
 import {theme} from "./theme";
 
+
 export const TaskEdit = () => {
-    const task = (useLocation()).state;
+    const task = (useLocation()).state
     const navigate = useNavigate();
 
     const [nome, setNome] = useState(task.nome);

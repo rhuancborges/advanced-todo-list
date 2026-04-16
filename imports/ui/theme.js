@@ -25,7 +25,16 @@ export const theme = createTheme({
     },
     "success": {
       "main": "#51ff5b"
-    }
+    },
+    "button-cad": {
+      "main": "#C2C8FA"
+    },
+    "button-and": {
+      "main": "#FAC975"
+    },
+    "button-con": {
+      "main": "#69FA83"
+    },
   },
   "typography": {
     "fontSize": 13,

@@ -1,17 +1,36 @@
 import { useLocation, useNavigate} from "react-router";
-import {Stack, Box, Dialog, DialogTitle, Button, Typography, Chip} from "@mui/material";
+import {Stack, Box, Dialog, DialogTitle, Button, ButtonGroup, Typography, Chip} from "@mui/material";
 import { Close } from "@mui/icons-material";
 import { alpha } from "@mui/material/styles";
 import {theme} from "./theme"
+import { TASK_STATUS} from "../api/taskStatus"
+import {useTracker, useSubscribe} from "meteor/react-meteor-data";
+import { TasksCollection } from '../api/TasksCollection';
 
+const colorChip = {
+    [TASK_STATUS.CADASTRADA]: "button-cad",
+    [TASK_STATUS.EM_ANDAMENTO]: "button-and",
+    [TASK_STATUS.CONCLUIDA]: "button-con"
+};
 
 export const TaskDetail = () => {
     const location = useLocation();
     const navigate = useNavigate();
-    const task = location.state;
+    const taskId = location.state;
+    const l = useSubscribe('tasks');
 
+    const task = useTracker(()=> {return TasksCollection.findOne({_id: taskId})});
+    
+    if (l()){
+        return <Dialog open> Carregando</Dialog>;
+    };
+
+    const updateTask = (status) => {
+        Meteor.call("task.update", task._id, {situacao: status})
+    }
+    //return(<Dialog fullScreen open>{task.nome}</Dialog>)
     return(
-        <Dialog fullScreen sx={{display: "flex", maxHeight: 500, maxWidth: 600, justifySelf: "center"}} open={true}>
+        <Dialog fullScreen sx={{display: "flex", justifyContent: "center"}} open={true}>
             <Box sx={{height: "96%", display: "flex", flexDirection: "column", 
                 alignItems:"center", justifyContent: "space-between"}}>
                 <Stack sx={{width: "95%", height: "1px", display: "flex", flexDirection: "row", justifyContent: "flex-end"}}>
@@ -27,15 +46,24 @@ export const TaskDetail = () => {
                 <Typography variant="body1" sx={{maxWidth: "70%"}}>{(task.descricao.trim()==="") ? "Não há descrição" : task.descricao}</Typography>  
                 <Typography variant="h6">Situação da tarefa</Typography>
                 <Stack sx={{width: "50%", display: "flex", flexDirection: "row", justifyContent: "space-around"}}>
-                    <Chip color="primary" label={task.situacao}/>
+                    <Chip sx={{backgroundColor: theme.palette[colorChip[task.situacao]].main, color: "black"}} label={task.situacao}/>
                     {task.tarefaPessoal ? <Chip color="secondary" label="Tarefa Pessoal"/> : ""}
                 </Stack>
                 <Typography variant="h6">Data da tarefa</Typography>
                 <Typography variant="body1" sx={{maxWidth: "70%"}}>{task.data.toLocaleDateString('pt-BR')}</Typography>   
                 <Typography variant="h6">Usuário criador da tarefa</Typography>
-                <Typography variant="body1">{task.usuarioCriador}</Typography>          
+                <Typography variant="body1">{task.usuarioCriador}</Typography> 
+                <Typography variant="h6">Mudar situação da tarefa</Typography>         
+                <ButtonGroup size="medium">
+                    <Button color="button-cad" disabled={(task.situacao === TASK_STATUS.CADASTRADA)
+                    } onClick={() => updateTask(TASK_STATUS.CADASTRADA)}>Cadastrada</Button>
+                    <Button color="button-and" disabled={(task.situacao === TASK_STATUS.EM_ANDAMENTO)}
+                    onClick={() => updateTask(TASK_STATUS.EM_ANDAMENTO)}>Em andamento</Button>
+                    <Button color="button-con" disabled={(task.situacao === TASK_STATUS.CONCLUIDA) || (task.situacao === TASK_STATUS.CADASTRADA)}
+                    onClick={() => updateTask(TASK_STATUS.CONCLUIDA)}>Concluída</Button>
+                </ButtonGroup>
                 <Stack sx={{width: "40%", display: "flex", flexDirection: "row", justifyContent: "space-around"}}>
-                    <Button variant="outlined" onClick={()=>navigate("/home/view/edit", {state: task})}>Editar tarefa</Button>
+                    <Button size="small" variant="outlined" onClick={()=>navigate("/home/view/edit", {state: task})}>Editar tarefa</Button>
                 </Stack>
             </Box>
         </Dialog>

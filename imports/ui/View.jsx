@@ -39,7 +39,8 @@ export const View = () => {
             <ListItem key={task._id} secondaryAction={
                 <MoreVert sx={{"&:hover": {cursor: "pointer"}}} onClick={(e) => handleClick(e,task)} /> 
             }>
-                <Stack sx={{display: "flex", flexDirection: "row", "&:hover": {cursor: "pointer"}}} onClick={()=>navigate("task-detail", {state: task})}>
+                <Stack sx={{display: "flex", flexDirection: "row", "&:hover": {cursor: "pointer"}}} 
+                onClick={()=>navigate("task-detail", {state: task._id})}>
                     <ListItemAvatar sx={{display: "flex", alignSelf: "center"}}>
                         <Avatar></Avatar>
                     </ListItemAvatar>
