@@ -51,7 +51,7 @@ export const TaskDetail = () => {
                 <Typography variant="h6">Usuário criador da tarefa</Typography>
                 <Typography variant="body1">{task.usuarioCriador}</Typography> 
                 <Typography variant="h6">Mudar situação da tarefa</Typography>         
-                <ButtonGroup size="medium">
+                <ButtonGroup size="medium" sx={{width: "80%"}}>
                     <Button color="button-cad" disabled={(task.situacao === TASK_STATUS.CADASTRADA)
                     } onClick={() => updateTask(TASK_STATUS.CADASTRADA)}>Cadastrada</Button>
                     <Button color="button-and" disabled={(task.situacao === TASK_STATUS.EM_ANDAMENTO)}

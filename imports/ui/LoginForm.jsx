@@ -70,7 +70,7 @@ export const LoginForm = () => {
                         variant="contained"
                         onClick={(e)=>handleClick(e)}
                     >
-                    Sign in
+                    Fazer Login
                     </Button>
                     <NavLink style={{color: "white"}} to="/cadastro">Não tem uma conta? Cadastre-se</NavLink>
                 </CardContent>

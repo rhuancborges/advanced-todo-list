@@ -69,7 +69,7 @@ export const CadastroForm = () => {
                         variant="contained"
                         onClick={(e)=>handleClick(e)}
                     >
-                    Sign in
+                    Cadastrar
                     </Button>
                     <NavLink style={{color: "white"}} to="/login">Já tem uma conta? Faça Login!</NavLink>
                 </CardContent>
