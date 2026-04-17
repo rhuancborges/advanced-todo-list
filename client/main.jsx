@@ -13,6 +13,8 @@ import { TaskAdd } from "../imports/ui/TaskAdd";
 import {TaskDetail} from "../imports/ui/TaskDetail"
 import {TaskEdit} from "../imports/ui/TaskEdit"
 import { TaskRemove } from "../imports/ui/TaskRemove";
+import {Profile} from "../imports/ui/Profile"
+import {ProfileEdit} from "../imports/ui/ProfileEdit"
 
 /* Esquema de rotas:
 
@@ -89,8 +91,8 @@ Meteor.startup(() => {
           <Route path="remove/:taskId" element={<PrivateRoute><TaskRemove/></PrivateRoute>}/>
           <Route path="add" element={<PrivateRoute><TaskAdd/></PrivateRoute>}/>
         </Route>
-        <Route path="profile">
-          <Route path="edit"/>
+        <Route path="profile" element={<PrivateRoute><Profile/></PrivateRoute>}>
+          <Route path="edit" element={<PrivateRoute><ProfileEdit/></PrivateRoute>}/>
         </Route>
       </Route>
     </Routes>

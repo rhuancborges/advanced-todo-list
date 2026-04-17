@@ -30,7 +30,7 @@ export const DrawerLayout = () => {
             }}} 
         onClick={()=>toggleDrawer(false)} />
         <Box sx={{p: 4, display: "flex", flexDirection: "column", alignItems: "center"}}>
-            <Avatar sx={{cursor: "pointer"}} onClick={()=>navigate("/profile")}/>
+            <Avatar src={user.foto} sx={{width: 50, height: 50, cursor: "pointer"}} onClick={()=>navigate("profile")}/>
             <Typography>{user.username}</Typography>
             <Button onClick={()=>navigate("/home")}>HOME</Button>
             <Button onClick={()=>navigate("view")}>Lista de Tarefas</Button>

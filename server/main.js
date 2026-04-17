@@ -59,7 +59,7 @@ Meteor.startup(async () => {
     email: "rhucambor@gmail.com",
     extra: {
       nome: "Rhuan",
-      dataNascimento: new Date("2003-09-29"),
+      dataNascimento: new Date("2003-09-29T00:00:00"),
       sexo: "Masculino",
       empresa: "Synergia",
       foto: await assetImagemParaDataUrl("img/profile_Admin.jpg", "image/jpg")
