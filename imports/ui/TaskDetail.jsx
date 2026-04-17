@@ -3,15 +3,11 @@ import {Stack, Box, Dialog, DialogTitle, Button, ButtonGroup, Typography, Chip} 
 import { Close } from "@mui/icons-material";
 import { alpha } from "@mui/material/styles";
 import {theme} from "./theme"
-import { TASK_STATUS} from "../api/taskStatus"
+import { colorChip, TASK_STATUS} from "../api/taskStatus"
 import {useTracker, useSubscribe} from "meteor/react-meteor-data";
 import { TasksCollection } from '../api/TasksCollection';
 
-const colorChip = {
-    [TASK_STATUS.CADASTRADA]: "button-cad",
-    [TASK_STATUS.EM_ANDAMENTO]: "button-and",
-    [TASK_STATUS.CONCLUIDA]: "button-con"
-};
+
 
 export const TaskDetail = () => {
     const navigate = useNavigate();
@@ -64,7 +60,7 @@ export const TaskDetail = () => {
                     onClick={() => updateTask(TASK_STATUS.CONCLUIDA)}>Concluída</Button>
                 </ButtonGroup>
                 <Stack sx={{width: "40%", display: "flex", flexDirection: "row", justifyContent: "space-around"}}>
-                    <Button size="small" variant="outlined" onClick={()=>navigate("/home/view/edit", {state: task})}>Editar tarefa</Button>
+                    <Button size="small" variant="outlined" onClick={()=>navigate(`/home/view/edit/${task._id}`)}>Editar tarefa</Button>
                 </Stack>
             </Box>
         </Dialog>

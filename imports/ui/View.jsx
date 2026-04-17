@@ -1,12 +1,15 @@
 import {List, ListItem, ListItemText, ListItemAvatar, Avatar, Alert, Typography,
      Chip, Alert, Fab, Box,
-     Stack, Menu, MenuItem} from '@mui/material';
+     Stack, Menu, MenuItem,
+     Dialog} from '@mui/material';
 import { TasksCollection } from '../api/TasksCollection';
 import {useSubscribe, useTracker} from "meteor/react-meteor-data";
 import { Meteor} from "meteor/meteor";
-import {MoreVert, Add} from '@mui/icons-material';
+import {MoreVert, Add, ContentPaste} from '@mui/icons-material';
 import {Outlet, useNavigate } from "react-router";
 import { useState } from 'react';
+import { colorChip } from '../api/taskStatus';
+import { theme } from './theme';
 
 export const View = () => {
     const isLoading = useSubscribe('tasks');
@@ -22,6 +25,10 @@ export const View = () => {
     const [ancora, setAncora] = useState(null);
     const [taskSelecionada, setTaskSelecionada] = useState(null);
     const open = Boolean(ancora);
+
+    if (isLoading()){
+        return <Dialog open>Carregando</Dialog>
+    }
 
     const handleClick = (e, task) => {
         setAncora(e.currentTarget);
@@ -39,12 +46,15 @@ export const View = () => {
             <ListItem key={task._id} secondaryAction={
                 <MoreVert sx={{"&:hover": {cursor: "pointer"}}} onClick={(e) => handleClick(e,task)} /> 
             }>
-                <Stack sx={{display: "flex", flexDirection: "row", "&:hover": {cursor: "pointer"}}} 
+                <Stack sx={{width: "100%", display: "flex", flexDirection: "row", justifyContent: "space-between", 
+                "&:hover": {cursor: "pointer"}}} 
                 onClick={()=>navigate(`task-detail/${task._id}`)}>
                     <ListItemAvatar sx={{display: "flex", alignSelf: "center"}}>
-                        <Avatar></Avatar>
+                        <Avatar><ContentPaste/></Avatar>
                     </ListItemAvatar>
-                    <ListItemText sx={{display: "flex", justifySelf: "space-around", flexDirection: "column"}}primary={task.nome} secondary={task.usuarioCriador}></ListItemText>
+                    <ListItemText sx={{display: "flex", justifySelf: "space-around", flexDirection: "column"}}
+                    primary={task.nome} secondary={task.usuarioCriador}></ListItemText>
+                    <Chip sx={{backgroundColor: theme.palette[colorChip[task.situacao]].main, color: "black"}} label={task.situacao}/>
                 </Stack>
             </ListItem>
         ))}
