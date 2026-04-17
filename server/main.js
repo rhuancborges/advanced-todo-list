@@ -2,6 +2,7 @@ import { Meteor } from "meteor/meteor";
 import { Accounts } from "meteor/accounts-base";
 import "../imports/api/authMethods.js";
 import "../imports/api/authPublications.js";
+import "../imports/api/authCollection.js"
 import "../imports/api/taskMethods.js";
 import "../imports/api/tasksPublication.js";
 import {TasksCollection} from "../imports/api/TasksCollection.js";
@@ -13,6 +14,25 @@ Accounts.config({
     ambiguousErrorMessages: false
 });
 
+Accounts.onCreateUser((options, user) => {
+    const extra = options.extra || {};
+
+    return {
+      ...user,
+      nome: extra.nome,
+      dataNascimento: extra.dataNascimento ? new Date(extra.dataNascimento) : null,
+      sexo: extra.sexo,
+      empresa: extra.empresa || '',
+      foto: extra.foto || '',
+    }
+});
+
+async function assetImagemParaDataUrl(assetPath, mimeType = 'image/png') {
+  const binario = await Assets.getBinaryAsync(assetPath);
+  const base64 = Buffer.from(binario).toString('base64');
+  return `data:${mimeType};base64,${base64}`;
+}
+
 const insertTask = (nome, username) => 
   TasksCollection.insertAsync({
     nome: nome,
@@ -23,7 +43,8 @@ const insertTask = (nome, username) =>
     createdAt: new Date(),
     updatedAt: new Date(),
     tarefaPessoal: false
-  });
+  }
+);
 
 
 Meteor.startup(async () => {
@@ -33,7 +54,18 @@ Meteor.startup(async () => {
     password: "admin123"
   };
 
-  Accounts.createUser(defaultUser);
+  Accounts.createUser({
+    ...defaultUser,
+    email: "rhucambor@gmail.com",
+    extra: {
+      nome: "Rhuan",
+      dataNascimento: new Date("2003-09-29"),
+      sexo: "Masculino",
+      empresa: "Synergia",
+      foto: await assetImagemParaDataUrl("img/profile_Admin.jpg", "image/jpg")
+    }
+  });
+  
   
   if (await TasksCollection.find().countAsync() === 0) {
     [
