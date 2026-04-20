@@ -1,7 +1,7 @@
 import {Meteor} from 'meteor/meteor';
 import {TasksCollection} from './TasksCollection';
 
-Meteor.publish('tasks', async function (mostraConcluidas){
+Meteor.publish('tasks', async function (mostraConcluidas, nome){
     if (!this.userId) {
         return this.ready();
     }
@@ -16,5 +16,17 @@ Meteor.publish('tasks', async function (mostraConcluidas){
     if (!mostraConcluidas) {
         filtro.situacao = { $ne: "Concluída" };
     }
+    
+    if (nome.trim()){
+        filtro.nome = {
+            $regex: nome,
+            $options: "i"
+        }
+    }
+    
     return TasksCollection.find(filtro);
+});
+
+Meteor.publish("tasksDashboard", async function () {
+    return TasksCollection.find();
 });

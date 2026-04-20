@@ -24,7 +24,7 @@ export const Dashboard = () => {
         }
     }
    
-    const isLoading = useSubscribe('tasks');
+    const isLoading = useSubscribe('tasksDashboard');
     
     const user = Meteor.user();
     const countConcluidas = useTracker(() => {

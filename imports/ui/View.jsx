@@ -4,11 +4,11 @@ import {List, ListItem, ListItemText, ListItemAvatar, Avatar, Alert, Typography,
      Dialog,
      FormControlLabel,
      FormGroup,
-     Switch} from '@mui/material';
+     Switch, TextField} from '@mui/material';
 import { TasksCollection } from '../api/TasksCollection';
 import {useSubscribe, useTracker} from "meteor/react-meteor-data";
 import { Meteor} from "meteor/meteor";
-import {MoreVert, Add, ContentPaste, CheckBox} from '@mui/icons-material';
+import {MoreVert, Add, ContentPaste, CheckBox, Search} from '@mui/icons-material';
 import {Outlet, useNavigate } from "react-router";
 import { useState } from 'react';
 import { colorChip } from '../api/taskStatus';
@@ -17,9 +17,12 @@ import { theme } from './theme';
 export const View = () => {
     const user = useTracker(()=>Meteor.user());
     const [mostraConcluidas, setMostraConcluidas] = useState(false);
-    const {tasks, isLoading} = useTracker(() => {
-        const handle = useSubscribe('tasks', mostraConcluidas);
-        return {isLoading: handle, tasks: TasksCollection.find().fetch()};
+    const [nomeCampo, setNomeCampo] = useState("")
+    const [nomePesquisa, setNomePesquisa] = useState(nomeCampo);
+    const isLoading = useSubscribe('tasks', mostraConcluidas, nomePesquisa);
+    
+    const tasks = useTracker(() => {
+       return TasksCollection.find().fetch();
     });
 
     const navigate = useNavigate();
@@ -41,12 +44,23 @@ export const View = () => {
         setAncora(null);
     }
 
+    const handleSearch = () => {
+        setNomePesquisa(nomeCampo);
+        setNomeCampo("");
+    }
+
     return (
     <>  
-        <FormGroup>
-            <FormControlLabel control={<Switch checked={mostraConcluidas} 
-            onChange={(e)=>setMostraConcluidas(e.target.checked)}/>}label="Mostrar tarefas concluídas"/>
-        </FormGroup>
+        <Stack sx={{width: "55%", alignItems: "center", justifyContent: "center", marginBottom: 1}} spacing={2} direction="row">
+            <Stack direction="row" spacing={1} sx={{display: "flex", alignItems: "center"}}>
+                <TextField sx={{width: 300}} onChange={(e) => setNomeCampo(e.target.value)}/>
+                <Search sx={{"&:hover": {cursor: "pointer"}}} onClick={handleSearch}/>
+            </Stack>
+            <FormGroup>
+                <FormControlLabel control={<Switch checked={mostraConcluidas} 
+                onChange={(e)=>setMostraConcluidas(e.target.checked)}/>}label="Mostrar tarefas concluídas"/>
+            </FormGroup>
+        </Stack>
         <List sx={{ width: '100%', maxWidth:600, bgcolor: 'background.paper' }}>
         {tasks.map((task) => (
             <ListItem key={task._id} secondaryAction={
