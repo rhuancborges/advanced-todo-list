@@ -1,25 +1,27 @@
 import {List, ListItem, ListItemText, ListItemAvatar, Avatar, Alert, Typography,
      Chip, Alert, Fab, Box,
      Stack, Menu, MenuItem,
-     Dialog} from '@mui/material';
+     Dialog,
+     FormControlLabel,
+     FormGroup,
+     Switch} from '@mui/material';
 import { TasksCollection } from '../api/TasksCollection';
 import {useSubscribe, useTracker} from "meteor/react-meteor-data";
 import { Meteor} from "meteor/meteor";
-import {MoreVert, Add, ContentPaste} from '@mui/icons-material';
+import {MoreVert, Add, ContentPaste, CheckBox} from '@mui/icons-material';
 import {Outlet, useNavigate } from "react-router";
 import { useState } from 'react';
 import { colorChip } from '../api/taskStatus';
 import { theme } from './theme';
 
 export const View = () => {
-    const isLoading = useSubscribe('tasks');
     const user = useTracker(()=>Meteor.user());
-    const tasks = useTracker(() => {
-        if(!user){
-            return [];
-        }
-        return TasksCollection.find().fetch();
+    const [mostraConcluidas, setMostraConcluidas] = useState(false);
+    const {tasks, isLoading} = useTracker(() => {
+        const handle = useSubscribe('tasks', mostraConcluidas);
+        return {isLoading: handle, tasks: TasksCollection.find().fetch()};
     });
+
     const navigate = useNavigate();
 
     const [ancora, setAncora] = useState(null);
@@ -40,7 +42,11 @@ export const View = () => {
     }
 
     return (
-    <>
+    <>  
+        <FormGroup>
+            <FormControlLabel control={<Switch checked={mostraConcluidas} 
+            onChange={(e)=>setMostraConcluidas(e.target.checked)}/>}label="Mostrar tarefas concluídas"/>
+        </FormGroup>
         <List sx={{ width: '100%', maxWidth:600, bgcolor: 'background.paper' }}>
         {tasks.map((task) => (
             <ListItem key={task._id} secondaryAction={
