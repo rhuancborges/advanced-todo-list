@@ -1,7 +1,7 @@
-import {Avatar, Box, Button, CssBaseline, Drawer, List, ThemeProvider, Typography} from "@mui/material";
+import {Avatar, Box, Button, CssBaseline, Dialog, Drawer, List, ThemeProvider, Typography} from "@mui/material";
 import {React, useState} from "react";
 import {theme} from "./theme";
-import {useTracker} from "meteor/react-meteor-data";
+import {useTracker, useSubscribe} from "meteor/react-meteor-data";
 import {Meteor} from "meteor/meteor";
 import { Navigate, Outlet, useNavigate } from "react-router";
 import {Dehaze, Close} from '@mui/icons-material';
@@ -9,8 +9,14 @@ import { alpha } from "@mui/material/styles";
 
 export const DrawerLayout = () => {
     const [open, setOpen] = useState(false);
+    const isLoading = useSubscribe("currentUser");
     const user = useTracker(()=>Meteor.user());
     const navigate = useNavigate();
+    
+    if (isLoading()){
+        return <Dialog open>Carregando...</Dialog>
+    }
+
     const toggleDrawer = (newOpen) => {
         setOpen(newOpen);
     };
@@ -31,7 +37,8 @@ export const DrawerLayout = () => {
         onClick={()=>toggleDrawer(false)} />
         <Box sx={{p: 4, display: "flex", flexDirection: "column", alignItems: "center"}}>
             <Avatar src={user.foto} sx={{width: 50, height: 50, cursor: "pointer"}} onClick={()=>navigate("profile")}/>
-            <Typography>{user.username}</Typography>
+            <Typography>{`Username: ${user.username}`}</Typography>
+            <Typography>{`Email: ${user.emails[0].address}`}</Typography>
             <Button onClick={()=>navigate("/home")}>HOME</Button>
             <Button onClick={()=>navigate("view")}>Lista de Tarefas</Button>
             <Button variant="outlined" onClick={()=>handleLogout()}>Logout</Button>
