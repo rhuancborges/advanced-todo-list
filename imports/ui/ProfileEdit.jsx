@@ -1,5 +1,6 @@
-import { Typography, Avatar,  Box, TextField, Button, Dialog, Stack, Menu, MenuItem } from "@mui/material";
-import { Close } from "@mui/icons-material";
+import { Typography, Avatar,  Box, TextField, Button, 
+    Dialog, Stack, Menu, MenuItem} from "@mui/material";
+import { Close, MenuOpen } from "@mui/icons-material";
 import {alpha} from "@mui/material/styles"
 import {theme} from "./theme"
 import {Meteor} from "meteor/meteor";
@@ -87,7 +88,7 @@ export const ProfileEdit = () => {
             },
         }}
         >
-            <Stack sx={{backgroundColor: "blue", width: "80%", display: "flex", flexDirection: "row", justifyContent: "flex-end"}}>
+            <Stack sx={{width: "80%", display: "flex", flexDirection: "row", justifyContent: "flex-end"}}>
                     <Close sx={{cursor: "pointer", 
                     width: 40, height: 40, p: 1, 
                     borderRadius: "50%", 
@@ -95,7 +96,7 @@ export const ProfileEdit = () => {
                         backgroundColor: alpha(theme.palette.background.default, 0.45)
                     }}} onClick={()=>navigate("/home/profile")}></Close>
                 </Stack>
-            <Box sx={{backgroundColor: "black", width: "80%", height: 500, display: "flex", 
+            <Box sx={{width: "80%", height: 500, display: "flex", 
             justifyContent: "space-around", alignItems: "center"}}>
                 <Box sx={{display: "flex", 
                     flexDirection: "column", justifyContent: "space-around", height: "80%"}}>
@@ -121,7 +122,12 @@ export const ProfileEdit = () => {
                     <TextField fullWidth label="E-mail" value={email} onChange={(e)=>setEmail(e.target.value)}/>
                     <TextField fullWidth type="date" label="Data de Nascimento" 
                     value={data.toISOString().split('T')[0]} onChange={(e)=>setData(e.target.value)}/>
-                    <TextField fullWidth label="Sexo" value={sexo} onChange={(e)=>setSexo(e.target.value)}/>
+                    <TextField select value={sexo} label="Sexo" onChange={(e)=>setSexo(e.target.value)}>
+                        <MenuItem value="Masculino">Masculino</MenuItem>
+                        <MenuItem value="Feminino">Feminino</MenuItem>
+                        <MenuItem value="Outro">Outro</MenuItem>
+                        <MenuItem value="Prefiro não dizer">Prefiro não dizer</MenuItem>
+                    </TextField>
                     <TextField fullWidth label="Empresa em que trabalha" value={empresa} onChange={(e)=>setEmpresa(e.target.value)}/>
                 </Box>
             </Box>
