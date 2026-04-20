@@ -10,6 +10,7 @@ import { Navigate, Outlet } from 'react-router-dom';
 
 export const App = () => {
   const user = useTracker(() => Meteor.user()); // Para vigiar mudanças de usuário no banco de dados
+  console.log(user);
   
   return user ? <Navigate to = "/home" /> : <Outlet/>;
 };

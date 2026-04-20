@@ -56,7 +56,7 @@ export const DrawerLayout = () => {
                     backgroundColor: alpha(theme.palette.info.main, 0.15)
                 }
             }} onClick={()=>toggleDrawer(true)}/>
-            <Drawer variant="persistent" open={open} >{list}</Drawer>
+            <Drawer variant="persistent" open={open}>{list}</Drawer>
             <Box sx={{display: "flex", flexDirection: "column", alignItems: "center"}}>
                 <Outlet/>
             </Box>

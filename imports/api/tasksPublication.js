@@ -17,7 +17,7 @@ Meteor.publish('tasks', async function (mostraConcluidas, nome){
         filtro.situacao = { $ne: "Concluída" };
     }
     
-    if (nome.trim()){
+    if (nome){
         filtro.nome = {
             $regex: nome,
             $options: "i"

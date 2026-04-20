@@ -35,7 +35,7 @@ export const TaskRemove = () =>{
                         backgroundColor: alpha(theme.palette.background.default, 0.45)
                     }}} onClick={()=>navigate("/home/view")}></Close>
                 </Stack>
-                <DialogTitle sx={{width: "60%"}}>{`Você não pode editar essa tarefa porque ela pertence ao usuário ${task.usuarioCriador}`}</DialogTitle>
+                <DialogTitle sx={{width: "60%"}}>{`Você não pode remover essa tarefa porque ela pertence ao usuário ${task.usuarioCriador}`}</DialogTitle>
             </Box>
         </Dialog>
         );

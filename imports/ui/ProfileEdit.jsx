@@ -15,7 +15,7 @@ export const ProfileEdit = () => {
     const [nome, setNome] = useState(user.nome);
     const [username, setUsername] = useState(user.username);
     const [email, setEmail] = useState(user.emails[0].address);
-    const [data, setData] = useState(user.dataNascimento);
+    const [data, setData] = useState((user.dataNascimento).toISOString().split('T')[0]);
     const [sexo, setSexo] = useState(user.sexo);
     const [empresa, setEmpresa] = useState(user.empresa);
     const [foto, setFoto] = useState(user.foto);
@@ -64,7 +64,7 @@ export const ProfileEdit = () => {
             username: username,
             sexo: sexo,
             email: email,
-            dataNascimento: data,
+            dataNascimento: new Date(data),
             empresa: empresa,
             foto: foto
         });
@@ -121,7 +121,8 @@ export const ProfileEdit = () => {
                     <TextField fullWidth label="Nome de usuário" value={username} onChange={(e)=>setUsername(e.target.value)}/>
                     <TextField fullWidth label="E-mail" value={email} onChange={(e)=>setEmail(e.target.value)}/>
                     <TextField fullWidth type="date" label="Data de Nascimento" 
-                    value={data.toISOString().split('T')[0]} onChange={(e)=>setData(e.target.value)}/>
+                    value={data} 
+                    onChange={(e)=>setData(e.target.value)}/>
                     <TextField select value={sexo} label="Sexo" onChange={(e)=>setSexo(e.target.value)}>
                         <MenuItem value="Masculino">Masculino</MenuItem>
                         <MenuItem value="Feminino">Feminino</MenuItem>

@@ -32,17 +32,21 @@ const UserSchema = new SimpleSchema({
     },
 
     nome: {
-        type: String
+        type: String,
+        optional: true
     },
     dataNascimento: {
-        type: Date
+        type: Date,
+        optional: true
     },
     sexo: {
         type: String,
-        allowedValues: ["Masculino", "Feminino", "Outro", "Prefiro não dizer"]
+        allowedValues: ["Masculino", "Feminino", "Outro", "Prefiro não dizer"],
+        optional: true
     },
     empresa: {
-        type: String
+        type: String,
+        optional: true
     },
     foto: {
         type: String,

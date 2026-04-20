@@ -4,14 +4,15 @@ import {Meteor} from "meteor/meteor";
 import {useTracker} from "meteor/react-meteor-data";
 import { FormControl, TextField, Card } from '@mui/material';
 import {theme} from "./theme";
-import { NavLink } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 
 export const CadastroForm = () => {
     const user = useTracker(() => Meteor.user()); // Para vigiar mudanças de usuário no banco de dados
-    
+    const navigate = useNavigate();
     // Use states para dados do usuário
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("");
 
     // Use states para as mensagens de erro
     const [errorMessage, setErrorMessage] = useState(null);
@@ -22,14 +23,23 @@ export const CadastroForm = () => {
         
         setErrorMessage(null);
         setIsError(false);
-        Meteor.loginWithPassword(username, password, (error) =>{
-            if (error){
-                setErrorMessage(error.reason);
-                setIsError(true);
-            }
+        Meteor.call("users.create", username, email, password, (createError) =>{
+            if (createError){
+               setIsError(true);
+               setErrorMessage(createError.error);
+               return;
+            };
+            Meteor.loginWithPassword(username, password, (error, result) =>{
+                    if (error){
+                        setIsError(true);
+                        setErrorMessage(createError.error);
+                        return;
+                    }
+                    navigate("/");
+                });
         });
-        setUsername("");
-        setPassword("");
+        
+               
     };
 
 
@@ -53,6 +63,13 @@ export const CadastroForm = () => {
                             placeholder="Username"
                             value={username}
                             onChange={(e) => setUsername(e.target.value)} />
+                    </FormControl>
+                    <FormControl>
+                        <TextField 
+                            id="my-input" 
+                            placeholder="Email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)} />
                     </FormControl>
                     <FormControl>
                         <TextField 
