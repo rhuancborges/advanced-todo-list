@@ -15,5 +15,9 @@ Meteor.methods({
     },
     "users.find"(username) {
         return Accounts.findUserByUsername(username);
+    },
+    "users.update"(doc){
+        return Meteor.users.updateAsync(this.userId, {$set: {...doc}});
     }
+
 });
